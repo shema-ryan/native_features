@@ -26,10 +26,17 @@ class _MapPickerState extends State<MapPicker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('pick Location'),
-      ),
+      appBar: AppBar(centerTitle: true, title: Text('pick Location'), actions: [
+        if (widget.isSelecting)
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: pickedLocation == null
+                ? null
+                : () {
+                    Navigator.of(context).pop(pickedLocation);
+                  },
+          ),
+      ]),
       body: GoogleMap(
         markers: pickedLocation == null
             ? null
