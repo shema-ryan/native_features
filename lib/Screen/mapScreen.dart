@@ -31,12 +31,14 @@ class _MapPickerState extends State<MapPicker> {
         title: Text('pick Location'),
       ),
       body: GoogleMap(
-        markers: {
-          Marker(
-            position: pickedLocation,
-            markerId: MarkerId('p1'),
-          ),
-        },
+        markers: pickedLocation == null
+            ? null
+            : {
+                Marker(
+                  position: pickedLocation,
+                  markerId: MarkerId('p1'),
+                ),
+              },
         onTap: widget.isSelecting ? selectedLocation : null,
         initialCameraPosition: CameraPosition(
             zoom: 16,
