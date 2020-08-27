@@ -16,6 +16,13 @@ class MapPicker extends StatefulWidget {
 }
 
 class _MapPickerState extends State<MapPicker> {
+  LatLng pickedLocation;
+  void selectedLocation(LatLng location) {
+    setState(() {
+      pickedLocation = location;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +31,13 @@ class _MapPickerState extends State<MapPicker> {
         title: Text('pick Location'),
       ),
       body: GoogleMap(
+        markers: {
+          Marker(
+            position: pickedLocation,
+            markerId: MarkerId('p1'),
+          ),
+        },
+        onTap: widget.isSelecting ? selectedLocation : null,
         initialCameraPosition: CameraPosition(
             zoom: 16,
             target: LatLng(widget.initialPosition.latitude,
