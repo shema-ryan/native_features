@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nativefeatures/Screen/place_detail_screen.dart';
 import 'package:nativefeatures/providers/place_provider.dart';
 import 'package:provider/provider.dart';
 import './add_place_screen.dart';
@@ -56,12 +57,17 @@ class PlacesListScreen extends StatelessWidget {
                               child: ListTile(
                                 onTap: () {
                                   /* go to detailed screen */
+                                  Navigator.of(context).pushNamed(
+                                      PlaceDetails.routeName,
+                                      arguments: favList.items[index].id);
                                 },
                                 leading: CircleAvatar(
                                   backgroundImage:
                                       FileImage(favList.items[index].image),
                                 ),
                                 title: Text(favList.items[index].title),
+                                subtitle:
+                                    Text(favList.items[index].location.address),
                               ),
                             )),
               ),

@@ -6,7 +6,7 @@ class MapPicker extends StatefulWidget {
   final PlaceLocation initialPosition;
   final bool isSelecting;
 
-  const MapPicker(
+  MapPicker(
       {this.initialPosition =
           const PlaceLocation(latitude: 0.3329, longitude: 32.5499),
       this.isSelecting = false});
@@ -38,11 +38,13 @@ class _MapPickerState extends State<MapPicker> {
           ),
       ]),
       body: GoogleMap(
-        markers: pickedLocation == null
+        markers: (pickedLocation == null && widget.isSelecting == true)
             ? null
             : {
                 Marker(
-                  position: pickedLocation,
+                  position: pickedLocation ??
+                      LatLng(widget.initialPosition.latitude,
+                          widget.initialPosition.longitude),
                   markerId: MarkerId('p1'),
                 ),
               },

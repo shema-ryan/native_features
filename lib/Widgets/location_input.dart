@@ -5,22 +5,30 @@ import '../Screen/mapScreen.dart';
 import '../helper/LocationHelper.dart';
 
 class InputLocation extends StatefulWidget {
+  final Function selectAddress;
+
+  const InputLocation(this.selectAddress);
+
   @override
   _InputLocationState createState() => _InputLocationState();
 }
 
 class _InputLocationState extends State<InputLocation> {
   String imagePreviewUrl;
-
-  Future<void> _getUserLocation() async {
-    LocationData location = await Location().getLocation();
+  void getPreview(double lat, double long) {
     String staticImageUrl = LocationHelper.getLocationPreview(
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: lat,
+      longitude: long,
     );
     setState(() {
       imagePreviewUrl = staticImageUrl;
     });
+  }
+
+  Future<void> _getUserLocation() async {
+    LocationData location = await Location().getLocation();
+    getPreview(location.latitude, location.longitude);
+    widget.selectAddress(location.latitude, location.longitude);
   }
 
   Future<void> getLocationOnMap() async {
@@ -33,6 +41,8 @@ class _InputLocationState extends State<InputLocation> {
     if (mapLocation == null) {
       return;
     }
+    getPreview(mapLocation.latitude, mapLocation.longitude);
+    widget.selectAddress(mapLocation.latitude, mapLocation.longitude);
   }
 
   @override

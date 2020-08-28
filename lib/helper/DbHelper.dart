@@ -8,7 +8,7 @@ class DbHelper {
     return openDatabase(join(dbPath, 'places.db'), version: 1,
         onCreate: (db, version) async {
       await db.execute(
-          'CREATE TABLE user_places(id TEXT PRIMARY KEY , title TEXT , image TEXT)');
+          'CREATE TABLE user_places(id TEXT PRIMARY KEY , title TEXT , image TEXT , loc_lat REAL , loc_long REAL , address TEXT)');
     });
   }
 
